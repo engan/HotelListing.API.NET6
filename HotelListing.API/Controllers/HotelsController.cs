@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HotelListing.API.Data;
 using HotelListing.API.Contracts;
-using HotelListing.API.Repository;
 using AutoMapper;
-using HotelListing.API.Models.Hotels;
+using HotelListing.API.Core.Models.Hotels;
 using Microsoft.AspNetCore.Authorization;
+using HotelListing.API.Core.Models;
+using static HotelListing.API.Core.Models.QueryParameters;
 
 namespace HotelListing.API.Controllers
 {
@@ -28,12 +24,20 @@ namespace HotelListing.API.Controllers
             this._mapper = mapper;
         }
 
-        // GET: api/Hotels
-        [HttpGet]
+        // GET: api/Hotels/GetAll
+        [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<HotelDto>>> GetHotels()
         {
             var hotels = await _hotelsRepository.GetAllAsync();
             return Ok(_mapper.Map<List<HotelDto>>(hotels));
+        }
+
+        // GET: api/Hotels/?StartIndex=0&pagesize=25&PageNumber=1
+        [HttpGet]
+        public async Task<ActionResult<PagedResult<HotelDto>>> GetPagedHotels([FromQuery] QueryParameters queryParameters)
+        {
+            var pagedHotelsResult = await _hotelsRepository.GetAllAsync<HotelDto>(queryParameters);
+            return Ok(pagedHotelsResult);
         }
 
         // GET: api/Hotels/5
@@ -42,10 +46,10 @@ namespace HotelListing.API.Controllers
         {
             var hotel = await _hotelsRepository.GetAsync(id);
 
-            if (hotel == null)
-            {
-                return NotFound();
-            }
+            //if (hotel == null)
+            //{
+            //    return NotFound();
+            //}
 
             return Ok(_mapper.Map<HotelDto>(hotel));
         }
@@ -102,11 +106,11 @@ namespace HotelListing.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteHotel(int id)
         {
-            var hotel = await _hotelsRepository.GetAsync(id);
-            if (hotel == null)
-            {
-                return NotFound();
-            }
+            //var hotel = await _hotelsRepository.GetAsync(id);
+            //if (hotel == null)
+            //{
+            //    return NotFound();
+            //}
 
             await _hotelsRepository.DeleteAsync(id);
 
