@@ -1,6 +1,8 @@
 # HotelListing.API.NET6
 Hotel Listing API developed using .NET6
 
+[Certificate of completion 4. october 2022. 10 hours, 69 lectures](https://www.udemy.com/certificate/UC-a2ad1a0b-23c1-40a5-a7f6-1e14bf2ec2c1/)  
+
 [Ultimate ASP.NET Core Web API Development Guide](https://www.udemy.com/course/ultimate-aspnet-5-web-api-development-guide/)  
 Learn how to create a maintainable Web API using ASP.NET Core, Entity Framework and Enterprise Level Design Patterns  
 
